@@ -18,8 +18,8 @@
     "*.{js,ts,json,css}": "biome format --write"
   },
   "devDependencies": {
-    "coverage-pretty-html-reporter": "workspace:*",
     "@biomejs/biome": "^1.2.2",
+    "coverage-pretty-html-reporter": "workspace:*",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1"
