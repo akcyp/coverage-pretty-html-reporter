@@ -1,0 +1,23 @@
+{
+  "name": "coverage-pretty-html-example",
+  "private": true,
+  "scripts": {
+    "test:nyc": "nyc --reporter=text --reporter=coverage-pretty-html-reporter mocha",
+    "test:c8": "c8 --reporter=text --reporter=coverage-pretty-html-reporter mocha"
+  },
+  "devDependencies": {
+    "coverage-pretty-html-reporter": "workspace:*",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/node": "^20.6.3",
+    "c8": "^8.0.1",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  },
+  "packageManager": "bun@1.0.2",
+  "engines": {
+    "node": "^18.17.1"
+  }
+}

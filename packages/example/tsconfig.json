@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./",
+    "esModuleInterop": true
+  },
+  "include": ["./typescript"],
+  "exclude": ["node_modules"]
+}

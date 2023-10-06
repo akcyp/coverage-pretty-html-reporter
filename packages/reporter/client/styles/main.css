@@ -1,0 +1,22 @@
+html,
+body {
+  height: 100%;
+  font-family: 'Readex Pro', sans-serif;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --color-text-light: #000;
+  --color-text-dark: #ddd;
+  --color-text: var(--color-text-light);
+  --background-color: #e4e4e4;
+}
+
+
+html.dark {
+  --color-text: var(--color-text-dark);
+  --background-color: #141414;
+  color: var(--color-text);
+  background-color: var(--background-color);
+  color-scheme: dark;
+}

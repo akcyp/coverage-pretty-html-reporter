@@ -1,0 +1,25 @@
+{
+  "name": "coverage-pretty-html",
+  "private": true,
+  "workspaces": ["packages/example", "packages/reporter"],
+  "scripts": {
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "fix:all": "biome lint --apply . && biome format --write . && biome check --apply .",
+    "ci": "biome ci ."
+  },
+  "lint-staged": {
+    "*.{js,ts}": "biome check --apply",
+    "*.{js,ts,json}": "biome lint --apply",
+    "*.{js,ts,json,css}": "biome format --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.2.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1"
+  },
+  "packageManager": "bun@1.0.2",
+  "engines": {
+    "node": "^18.17.1"
+  }
+}

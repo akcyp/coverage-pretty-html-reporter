@@ -1,0 +1,46 @@
+{
+  "name": "coverage-pretty-html-reporter",
+  "version": "0.0.0",
+  "files": ["dist"],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "bun run build:client && bun run build:node",
+    "build:client": "vue-tsc && vite build",
+    "build:node": "rollup -c"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "biome check --apply",
+    "*.{js,ts,json}": "biome lint --apply",
+    "*.{js,ts,json,css}": "biome format --write"
+  },
+  "dependencies": {
+    "istanbul-lib-report": "^3.0.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.5",
+    "@types/istanbul-lib-report": "^3.0.0",
+    "@types/node": "^20.6.3",
+    "@unocss/reset": "^0.56.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "pathe": "^1.1.1",
+    "rollup": "^4.0.2",
+    "rollup-plugin-dts": "^6.0.2",
+    "rollup-plugin-esbuild": "^6.0.2",
+    "typescript": "^5.0.2",
+    "unocss": "^0.56.0",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
+    "vite": "^4.4.5",
+    "vite-plugin-pages": "^0.31.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "vue-tsc": "^1.8.5"
+  },
+  "packageManager": "bun@1.0.2",
+  "engines": {
+    "node": "^18.17.1"
+  }
+}
