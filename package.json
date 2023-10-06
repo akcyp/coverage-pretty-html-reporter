@@ -1,12 +1,16 @@
 {
   "name": "coverage-pretty-html",
   "private": true,
-  "workspaces": ["packages/example", "packages/reporter"],
+  "workspaces": ["packages/*"],
   "scripts": {
     "prepare": "husky install",
     "precommit": "lint-staged",
     "fix:all": "biome lint --apply . && biome format --write . && biome check --apply .",
-    "ci": "biome ci ."
+    "ci": "biome ci .",
+    "build": "bun run --cwd packages/reporter build",
+    "demo:nyc": "bun run --cwd packages/example test:nyc",
+    "demo:c8": "bun run --cwd packages/example test:c8",
+    "demo:preview": "http-server packages/example/coverage"
   },
   "lint-staged": {
     "*.{js,ts}": "biome check --apply",
@@ -14,7 +18,9 @@
     "*.{js,ts,json,css}": "biome format --write"
   },
   "devDependencies": {
+    "coverage-pretty-html-reporter": "workspace:*",
     "@biomejs/biome": "^1.2.2",
+    "http-server": "^14.1.1",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1"
   },

@@ -6,8 +6,8 @@
     "test:c8": "c8 --reporter=text --reporter=coverage-pretty-html-reporter mocha"
   },
   "devDependencies": {
-    "coverage-pretty-html-reporter": "workspace:*",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/mocha": "^10.0.2",
     "@types/node": "^20.6.3",
     "c8": "^8.0.1",
     "mocha": "^10.2.0",
