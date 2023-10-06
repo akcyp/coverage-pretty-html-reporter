@@ -2,8 +2,8 @@
   "name": "coverage-pretty-html-example",
   "private": true,
   "scripts": {
-    "test:nyc": "nyc --reporter=text --reporter=coverage-pretty-html-reporter mocha",
-    "test:c8": "c8 --reporter=text --reporter=coverage-pretty-html-reporter mocha"
+    "test:nyc": "nyc --reporter=html --reporter=coverage-pretty-html-reporter mocha",
+    "test:c8": "c8 --reporter=html --reporter=coverage-pretty-html-reporter mocha"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
