@@ -57,3 +57,36 @@ pnpm dlx http-server ./coverage
 # When using bun
 bunx http-server ./coverage
 ```
+
+## Contributing
+
+Fell free to report any bugs & share your ideas. PRs are welcome.
+
+## Developer guide
+
+Requirements (see package.json#packageManager):
+- bun@1.0.4
+- node@^18.17.1
+
+```sh
+git clone git@github.com:akcyp/coverage-pretty-html-reporter.git
+cd coverage-pretty-html-reporter
+
+# Init
+bun i
+bun run build
+
+# Production testing
+bun run demo:nyc # or demo:c8
+bun run demo:preview
+
+# UI development
+cd packages/reporter
+bun run dev
+
+# Reporter development - only production testing
+# edit packages/reporter/node/index.ts
+cd packages/example
+bun run test:c8
+bun run test:nyc
+```
