@@ -1,14 +1,10 @@
-import { resolve } from "pathe";
-import { defineConfig } from "vite";
-
 import vue from "@vitejs/plugin-vue";
 import { presetAttributify, presetIcons, presetUno } from "unocss";
 import Unocss from "unocss/vite";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import Pages from "vite-plugin-pages";
+import { defineConfig } from "vite";
 
 export default defineConfig({
+  base: "",
   build: {
     outDir: "./dist/client",
   },
@@ -29,19 +25,6 @@ export default defineConfig({
         "tab-button": "font-light op50 hover:op80 h-full px-4",
         "tab-button-active": "op100 bg-gray-500:10",
       },
-    }),
-    Components({
-      dirs: ["client/components"],
-      dts: resolve(__dirname, "./client/components.d.ts"),
-    }),
-    Pages({
-      dirs: ["client/pages"],
-    }),
-    AutoImport({
-      dirs: ["./client/composables"],
-      dts: resolve(__dirname, "./client/auto-imports.d.ts"),
-      imports: ["vue", "vue-router"],
-      injectAtEnd: true,
     }),
   ],
 });

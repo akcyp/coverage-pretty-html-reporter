@@ -13,13 +13,14 @@
 </template>
 
 <script setup lang="ts">
+import { shallowRef, watch } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { StateField, StateEffect } from '@codemirror/state'
 import { EditorView, ViewUpdate, Decoration, DecorationSet, gutter, GutterMarker } from '@codemirror/view'
 import { javascript } from '@codemirror/lang-javascript'
 import { cssTheme } from './cssTheme'
 
-import { CoverageDetail } from '../../shared/report-types'
+import type { CoverageDetail } from '../../shared/report-types'
 
 type CoverageUpdateEvent = Record<'uncoveredStatements' | 'uncoveredBranches' | 'uncoveredFunctions', {
   start: number;
