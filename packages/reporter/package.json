@@ -11,11 +11,6 @@
     "build:client": "vue-tsc && vite build",
     "build:node": "rollup -c"
   },
-  "lint-staged": {
-    "*.{js,ts}": "biome check --apply",
-    "*.{js,ts,json}": "biome lint --apply",
-    "*.{js,ts,json,css}": "biome format --write"
-  },
   "dependencies": {
     "istanbul-lib-report": "^3.0.1",
     "lz-string": "^1.5.0"
