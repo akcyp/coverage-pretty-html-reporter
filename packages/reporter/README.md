@@ -3,9 +3,9 @@
 > [!WARNING]
 > This package is still in the experimental phase. You can expect new functionalities, but with this comes the possibility of more frequent errors
 
-Directory summary (light theme) |  File coverage (dark theme)
-:------------------------------:|:----------------------------:
-![Summary](../../images/summary.png)  | ![Coverage](../../images/file.png)
+Directory summary (light theme)                                                                 |  File coverage (dark theme)
+:----------------------------------------------------------------------------------------------:|:----------------------------:
+![Summary](https://github.com/akcyp/coverage-pretty-html-reporter/raw/main/images/summary.png)  | ![Coverage](https://github.com/akcyp/coverage-pretty-html-reporter/raw/main/images/file.png)
 
 ## Installation
 
