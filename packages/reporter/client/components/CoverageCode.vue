@@ -19,35 +19,7 @@ import { EditorView, ViewUpdate, Decoration, DecorationSet, gutter, GutterMarker
 import { javascript } from '@codemirror/lang-javascript'
 import { cssTheme } from './cssTheme'
 
-type RangeLocationPos = {
-  line: number;
-  column: number;
-};
-
-type RangeLocation = {
-  start: RangeLocationPos;
-  end: RangeLocationPos;
-}
-
-type Coverage = {
-  path: string;
-  statementMap: Record<string, RangeLocation>;
-  lines: Record<string, number>;
-  s: Record<string, number>;
-  branchMap: Record<string, {
-    type: string; // branch, switch ...
-    line: number;
-    loc: RangeLocation;
-    locations: RangeLocation[];
-  }>;
-  b: Record<string, number[]>;
-  fnMap: Record<string, {
-    name: string;
-    decl: RangeLocation;
-    loc: RangeLocation;
-  }>;
-  f: Record<string, number>;
-};
+import { CoverageDetail } from '../../shared/report-types'
 
 type CoverageUpdateEvent = Record<'uncoveredStatements' | 'uncoveredBranches' | 'uncoveredFunctions', {
   start: number;
@@ -56,11 +28,14 @@ type CoverageUpdateEvent = Record<'uncoveredStatements' | 'uncoveredBranches' | 
 
 const props = defineProps<{
   code: string;
-  coverage: Coverage;
+  coverage: CoverageDetail;
 }>()
 
 const codeLines = props.code.split('\n');
-const locationToRange = (loc: RangeLocationPos) => {
+const locationToRange = (loc: {
+  line: number;
+  column: number;
+}) => {
   return codeLines.slice(0, loc.line - 1).map(({ length }) => length + 1).reduce((a, b) => a + b, 0) + loc.column
 }
 
@@ -136,7 +111,7 @@ const extensions = [
 
 // Codemirror EditorView instance ref
 const view = shallowRef<EditorView>()
-const updateCoverage = (value: Coverage) => {
+const updateCoverage = (value: CoverageDetail) => {
   const uncoveredStatements = Object.entries(value.s)
     .filter(([_, count]) => count === 0)
     .map(([id]) => value.statementMap[id])

@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./client/**/*.ts", "./client/**/*.d.ts", "./client/**/*.tsx", "./client/**/*.vue", "./client/vite-env.d.ts"],
+  "include": ["./client/**/*.ts", "./client/**/*.d.ts", "./client/**/*.tsx", "./client/**/*.vue", "./client/vite-env.d.ts", "shared/report-types.d.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"

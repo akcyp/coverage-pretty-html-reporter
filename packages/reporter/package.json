@@ -17,7 +17,8 @@
     "*.{js,ts,json,css}": "biome format --write"
   },
   "dependencies": {
-    "istanbul-lib-report": "^3.0.1"
+    "istanbul-lib-report": "^3.0.1",
+    "lz-string": "^1.5.0"
   },
   "devDependencies": {
     "@codemirror/lang-javascript": "^6.2.1",

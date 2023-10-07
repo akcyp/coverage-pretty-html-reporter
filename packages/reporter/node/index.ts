@@ -1,83 +1,116 @@
-import { type Context, ReportBase, type ReportBaseOptions, type ReportNode } from "istanbul-lib-report";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
+import { CoverageSummary } from "istanbul-lib-coverage";
+import { ReportBase } from "istanbul-lib-report";
+import { compress } from "lz-string";
 
-import { type CoverageSummary } from "istanbul-lib-coverage";
+import type { Context, FileContentWriter, ReportBaseOptions, ReportNode } from "istanbul-lib-report";
+import type { DirectoryReport, FileReport, Report, SummaryStats } from "../shared/report-types";
+export type * from "../shared/report-types";
 
-declare module "istanbul-lib-report" {
-  export interface FileWriter {
-    /** @deprecated */
-    writeForDir(subdir: string): FileWriter;
-    writerForDir(subdir: string): FileWriter;
-  }
-  export interface ReportNode {
-    getCoverageSummary(): CoverageSummary;
+function* walkDir(dir: string) {
+  for (const dirent of readdirSync(dir)) {
+    const entry = join(dir, dirent);
+    const d = statSync(entry);
+    if (d.isDirectory()) yield* walkDir(entry);
+    else if (d.isFile()) yield entry;
   }
 }
 
-module.exports = class NextHTMLReport extends ReportBase {
+export class NextHTMLReport extends ReportBase {
+  private reports: Report[] = [];
+
+  private getStats(summary: CoverageSummary, context: Context) {
+    const metricNames = ["statements", "branches", "lines", "functions"] as const;
+    return Object.fromEntries(
+      metricNames.map((key) => {
+        const { total, covered, pct } = summary[key];
+        return [
+          key,
+          {
+            total,
+            covered,
+            pct,
+            class: context.classForPercent(key, pct),
+          },
+        ];
+      }),
+    ) as SummaryStats;
+  }
+
+  private getWriter(context: Context) {
+    if (!this.options.subdir) {
+      return context.writer;
+    }
+    return context.getWriter().writerForDir(this.options.subdir);
+  }
+
+  private reset() {
+    this.reports = [];
+  }
+
   constructor(private options: ReportBaseOptions & { subdir?: string }) {
     super(options);
   }
 
-  getWriter(context: Context) {
-    if (!this.options.subdir) {
-      return context.writer;
-    }
-    return context.writer.writerForDir(this.options.subdir);
-  }
-
-  execute(context: Context) {
-    super.execute(context);
-  }
-
-  /**
-   * Runs on root node
-   */
-  onStart(root: ReportNode, context: Context) {
+  override onStart(root: ReportNode, context: Context) {
+    this.reset();
+    const dist = join(__dirname, "../dist/client");
     const writer = this.getWriter(context);
-    // Copy static files
-    // writer.copyFile()
-  }
+    const staticFiles = [...walkDir(dist)];
 
-  /**
-   * Runs on every directory
-   */
-  onSummary(node: ReportNode, context: Context) {
-    // TODO: implement
-    const children = node.getChildren();
-    children.forEach((node) => {
-      const child = node as ReportNode;
-      const metrics = child.getCoverageSummary();
-      const isEmpty = metrics.isEmpty();
-      const statements = context.classForPercent("statements", metrics.statements.pct);
-      const lines = context.classForPercent("lines", metrics.lines.pct);
-      const functions = context.classForPercent("functions", metrics.functions.pct);
-      const branches = context.classForPercent("branches", metrics.branches.pct);
-      console.log({
-        file: child.getRelativeName(),
-        metrics,
-        isEmpty,
-        stats: {
-          statements,
-          lines,
-          functions,
-          branches,
-        },
-      });
+    // Copy static files
+    staticFiles.forEach((source) => {
+      writer.copyFile(source, relative(dist, source));
     });
   }
 
-  /**
-   * Runs on every file
-   */
-  onDetail(node: ReportNode, context: Context) {
-    const summary = node.getCoverageSummary();
-    const templateData = {
-      entity: node.getQualifiedName() || "All files",
-      metrics: summary,
-      reportClass: context.classForPercent("statements", summary.statements.pct),
+  override onSummary(node: ReportNode, context: Context) {
+    const report: DirectoryReport = {
+      type: "directory",
+      root: node.isRoot(),
+      name: node.getRelativeName(),
+      entity: node.getQualifiedName(),
+      stats: this.getStats(node.getCoverageSummary(), context),
+      childStats: node.getChildren().map((child) => ({
+        file: (child as ReportNode).getRelativeName(),
+        stats: this.getStats((child as ReportNode).getCoverageSummary(), context),
+      })),
     };
-    const cov = node.getFileCoverage(); // annottate
-    const { path, b, f, s, branchMap, fnMap, statementMap } = cov;
-    console.log(templateData, JSON.stringify({ path, b, f, s, branchMap, fnMap, statementMap, lines: cov.getLineCoverage() }));
+    this.reports.push(report);
   }
-};
+
+  override onDetail(node: ReportNode, context: Context) {
+    const cov = node.getFileCoverage();
+    const { path, b, f, s, branchMap, fnMap, statementMap } = cov;
+    const report: FileReport = {
+      type: "file",
+      name: node.getRelativeName(),
+      entity: node.getQualifiedName(),
+      stats: this.getStats(cov.toSummary(), context),
+      path,
+      detail: {
+        b,
+        f,
+        s,
+        branchMap,
+        fnMap,
+        statementMap,
+        lines: cov.getLineCoverage(),
+      },
+      fileContent: compress(readFileSync(path, "utf-8")),
+    };
+    this.reports.push(report);
+  }
+
+  override onEnd(root: ReportNode, context: Context) {
+    // write
+    const writer = this.getWriter(context);
+    const statsStream = writer.writeFile("stats.json") as FileContentWriter;
+    statsStream.write(JSON.stringify(this.reports));
+    statsStream.close();
+    this.reset();
+  }
+}
+
+module.exports = NextHTMLReport;

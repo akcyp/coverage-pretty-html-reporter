@@ -2,7 +2,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import dts from "rollup-plugin-dts";
 import esbuild from "rollup-plugin-esbuild";
 
-const external = ["istanbul-lib-report"];
+const external = ["istanbul-lib-report", 'lz-string', 'node:fs', 'node:path'];
 
 export default [
   {
