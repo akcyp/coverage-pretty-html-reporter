@@ -77,6 +77,7 @@ module.exports = class NextHTMLReport extends ReportBase {
       reportClass: context.classForPercent("statements", summary.statements.pct),
     };
     const cov = node.getFileCoverage(); // annottate
-    console.log(templateData, cov);
+    const { path, b, f, s, branchMap, fnMap, statementMap } = cov;
+    console.log(templateData, JSON.stringify({ path, b, f, s, branchMap, fnMap, statementMap, lines: cov.getLineCoverage() }));
   }
 };

@@ -2,6 +2,7 @@
   "name": "coverage-pretty-html",
   "private": true,
   "workspaces": ["packages/*"],
+  "type": "commonjs",
   "scripts": {
     "prepare": "husky install",
     "precommit": "lint-staged",
@@ -19,12 +20,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
-    "coverage-pretty-html-reporter": "workspace:*",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1"
   },
-  "packageManager": "bun@1.0.2",
+  "packageManager": "bun@1.0.4",
   "engines": {
     "node": "^18.17.1"
   }
