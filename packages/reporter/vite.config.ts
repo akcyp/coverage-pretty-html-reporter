@@ -7,6 +7,13 @@ export default defineConfig({
   base: "",
   build: {
     outDir: "./dist/client",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          codemirror: ["codemirror", "@codemirror/state", "@codemirror/view", "@codemirror/lang-javascript", "@codemirror/language"],
+        },
+      },
+    },
   },
   optimizeDeps: {
     include: ["vue"],
@@ -26,5 +33,12 @@ export default defineConfig({
         "tab-button-active": "op100 bg-gray-500:10",
       },
     }),
+    {
+      name: "load-metadata",
+      apply: "build",
+      transformIndexHtml: (html) => {
+        return html.replace("<!-- !LOAD_METADATA! -->", `<script type="application/javascript" src="./loadcov.js"></script>`);
+      },
+    },
   ],
 });

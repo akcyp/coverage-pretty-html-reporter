@@ -152,7 +152,5 @@ watch(() => props.coverage, (value) => {
 const handleReady = (payload: Pick<ViewUpdate, 'view' | 'state'>) => {
   view.value = payload.view
   updateCoverage(props.coverage)
-  console.log(view.value)
 };
 </script>
-../utils/cssTheme

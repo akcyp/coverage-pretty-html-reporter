@@ -11,7 +11,7 @@
     "build": "bun run --cwd packages/reporter build",
     "demo:nyc": "bun run --cwd packages/example test:nyc",
     "demo:c8": "bun run --cwd packages/example test:c8",
-    "demo:preview": "http-server packages/example/coverage/next"
+    "demo:preview": "http-server packages/example/coverage"
   },
   "lint-staged": {
     "*.{js,ts}": "biome check --apply",

@@ -15,6 +15,7 @@ const props = defineProps<{
 <style>
 .stats-table td {
   border: 1px solid black;
+  min-width: 100px;
 }
 html.dark .stats-table td {
   border: 1px solid white;
@@ -22,7 +23,7 @@ html.dark .stats-table td {
 </style>
 
 <template>
-  <div h-screen w-screen overflow="hidden" p="4" flex flex-col>
+  <div h-screen w-screen overflow="hidden" p="4" flex flex-col class="layout">
     <Nav :path="props.report.entity" />
     <Stats :stats="props.report.stats" />
 

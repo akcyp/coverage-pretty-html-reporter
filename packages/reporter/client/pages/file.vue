@@ -17,11 +17,11 @@ const code = computed(() => decompress(props.report.fileContent))
 </script>
 
 <template>
-  <div h-screen w-screen overflow="hidden" p="4" flex flex-col>
+  <div h-screen w-screen overflow="hidden" p="4" flex flex-col class="layout">
     <Nav :path="props.report.entity" />
     <Stats :stats="props.report.stats" />
 
-    <section h-full>
+    <section flex-grow>
       <CoverageCode :code="code" :coverage="props.report.detail" />
     </section>
 

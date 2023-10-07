@@ -109,8 +109,8 @@ export class NextHTMLReport extends ReportBase {
   override onEnd(root: ReportNode, context: Context) {
     // write
     const writer = this.getWriter(context);
-    const statsStream = writer.writeFile("stats.json") as FileContentWriter;
-    statsStream.write(JSON.stringify(this.reports));
+    const statsStream = writer.writeFile("loadcov.js") as FileContentWriter;
+    statsStream.write(`window.reports=${JSON.stringify(this.reports)}`);
     statsStream.close();
     this.reset();
   }

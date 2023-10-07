@@ -5,6 +5,20 @@ body {
   scroll-behavior: smooth;
 }
 
+.layout nav, .layout main {
+  flex: 0 1 auto;
+}
+
+.layout section {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.layout footer {
+  margin-top: 16px;
+  flex: 0 1 16px;
+}
+
 :root {
   --color-text-light: #000;
   --color-text-dark: #ddd;

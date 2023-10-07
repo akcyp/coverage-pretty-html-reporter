@@ -11,8 +11,6 @@ const links = computed(() => (props.path ? `/${props.path}` : '').split('/').map
   href: arr.slice(0, i + 1).join('/') || '/',
 })))
 
-console.log(links, props.path)
-
 </script>
 
 <template>
