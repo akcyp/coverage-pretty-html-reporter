@@ -2,15 +2,32 @@
 import Nav from '../components/Nav.vue';
 import Stats from '../components/Stats.vue';
 import Footer from '../components/Footer.vue';
+import ProgressBar from '../components/ProgressBar.vue';
+
+import type { DirectoryReport } from "../../shared/report-types";
+import { statToString } from '../utils/statToString';
+
+const props = defineProps<{
+  report: DirectoryReport
+}>();
 </script>
+
+<style>
+.stats-table td {
+  border: 1px solid black;
+}
+html.dark .stats-table td {
+  border: 1px solid white;
+}
+</style>
 
 <template>
   <div h-screen w-screen overflow="hidden" p="4" flex flex-col>
-    <Nav />
-    <Stats />
+    <Nav :path="props.report.entity" />
+    <Stats :stats="props.report.stats" />
 
-    <section w="100%" h="60%">
-      <table w="100%" h-1>
+    <section w-full h-full>
+      <table w-full h-1 class="stats-table">
         <thead>
           <th>File</th>
           <th></th>
@@ -20,34 +37,36 @@ import Footer from '../components/Footer.vue';
           <th>Lines</th>
         </thead>
         <tbody>
-          <tr p="x-2 y-1" border-rounded cursor-pointer hover="bg-active">
-            <td text-sm truncate font-light p-1>Point.spec.ts</td>
-            <td p-2 w-50>
-              <div b-1 w="100%" h="100%">
-                <div w="30%" h="100%" bg="green-500"></div>
-              </div>
+          <tr
+            p="x-2 y-1"
+            border-rounded cursor-pointer
+            hover="bg-active"
+            v-for="child of props.report.childStats"
+            @click="$router.push({ path: `/${child.entity}` })"
+          >
+            <td text-sm text-center truncate font-light p-1>
+              {{ child.name }}
             </td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-          </tr>
-          <tr p="x-2 y-1" border-rounded cursor-pointer hover="bg-active">
-            <td text-sm truncate font-light p-1>Point.spec.ts</td>
             <td p-2 w-50>
-              <div b-1 w="100%" h="100%">
-                <div w="30%" h="100%" bg="green-500"></div>
-              </div>
+              <ProgressBar :value="child.stats.statements.pct" :color="`var(--stat-${child.stats.statements.class})`" />
             </td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
-            <td text-sm p-1 text-center>0% (0/20)</td>
+            <td text-sm p-1 text-center :style="{ color: `var(--stat-${child.stats.statements.class})` }">
+              {{ statToString(child.stats.statements) }}
+            </td>
+            <td text-sm p-1 text-center :style="{ color: `var(--stat-${child.stats.branches.class})` }">
+              {{ statToString(child.stats.branches) }}
+            </td>
+            <td text-sm p-1 text-center :style="{ color: `var(--stat-${child.stats.functions.class})` }">
+              {{ statToString(child.stats.functions) }}
+            </td>
+            <td text-sm p-1 text-center :style="{ color: `var(--stat-${child.stats.lines.class})` }">
+              {{ statToString(child.stats.lines) }}
+            </td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <Footer :date="new Date()" />
+    <Footer :unix="props.report.unix" />
   </div>
 </template>

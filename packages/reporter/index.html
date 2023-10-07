@@ -12,8 +12,19 @@
       (function () {
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
-        if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        if (setting === 'dark' || (prefersDark && setting !== 'light')) {
           document.documentElement.classList.toggle('dark', true)
+        }
+        window.addEventListener('message', (e) => {
+          if (e.data.theme === 'dark') {
+            document.documentElement.classList.remove('light')
+            document.documentElement.classList.add('dark')
+          }
+          if (e.data.theme === 'light') {
+            document.documentElement.classList.remove('dark')
+            document.documentElement.classList.add('light')
+          }
+        });
       })()
     </script>
     <!-- !LOAD_METADATA! -->

@@ -50,9 +50,11 @@ export type DirectoryReport = {
   entity: string;
   stats: SummaryStats;
   childStats: {
-    file: string;
+    name: string;
+    entity: string;
     stats: SummaryStats;
   }[];
+  unix: number;
 };
 
 export type FileReport = {
@@ -63,6 +65,7 @@ export type FileReport = {
   path: string;
   detail: CoverageDetail;
   fileContent: string;
+  unix: number;
 };
 
 export type Report = FileReport | DirectoryReport;

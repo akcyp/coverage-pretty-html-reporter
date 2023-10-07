@@ -6,7 +6,7 @@
   "formatter": {
     "indentSize": 2,
     "indentStyle": "space",
-    "ignore": ["dist"],
+    "ignore": ["**/dist", "**/node_modules", "**/coverage", "**/nyc-output"],
     "lineWidth": 160
   },
   "linter": {
@@ -14,6 +14,6 @@
     "rules": {
       "recommended": true
     },
-    "ignore": ["dist"]
+    "ignore": ["**/dist", "**/node_modules", "**/coverage", "**/nyc-output"]
   }
 }

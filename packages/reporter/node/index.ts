@@ -67,13 +67,15 @@ export class NextHTMLReport extends ReportBase {
 
   override onSummary(node: ReportNode, context: Context) {
     const report: DirectoryReport = {
+      unix: Date.now(),
       type: "directory",
       root: node.isRoot(),
       name: node.getRelativeName(),
       entity: node.getQualifiedName(),
       stats: this.getStats(node.getCoverageSummary(), context),
       childStats: node.getChildren().map((child) => ({
-        file: (child as ReportNode).getRelativeName(),
+        name: (child as ReportNode).getRelativeName(),
+        entity: (child as ReportNode).getQualifiedName(),
         stats: this.getStats((child as ReportNode).getCoverageSummary(), context),
       })),
     };
@@ -84,6 +86,7 @@ export class NextHTMLReport extends ReportBase {
     const cov = node.getFileCoverage();
     const { path, b, f, s, branchMap, fnMap, statementMap } = cov;
     const report: FileReport = {
+      unix: Date.now(),
       type: "file",
       name: node.getRelativeName(),
       entity: node.getQualifiedName(),

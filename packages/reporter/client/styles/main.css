@@ -10,6 +10,10 @@ body {
   --color-text-dark: #ddd;
   --color-text: var(--color-text-light);
   --background-color: #e4e4e4;
+
+  --stat-low: #ff2d4c;
+  --stat-medium: #6a6a48;
+  --stat-high: #61be61;
 }
 
 
@@ -19,6 +23,10 @@ html.dark {
   color: var(--color-text);
   background-color: var(--background-color);
   color-scheme: dark;
+
+  --stat-low: #de0000;
+  --stat-medium: #d2d200;
+  --stat-high: #00c400;
 }
 
 /* Code editor */
@@ -26,7 +34,6 @@ html.dark {
 :root {
   --cm-uncovered-statement: #ff6c6c;
   --cm-uncovered-branch: #f1ff88;
-  --cm-uncovered-function: #ca70ff;
   --cm-uncovered: #ff6c6c;
   --cm-covered: #b8ffc3;
 
@@ -57,7 +64,6 @@ html.dark {
   --cm-scheme: dark;
   --cm-uncovered-statement: #570000;
   --cm-uncovered-branch: #485200;
-  --cm-uncovered-function: #3d075d;
   --cm-uncovered: #570000;
   --cm-covered: #195700;
 

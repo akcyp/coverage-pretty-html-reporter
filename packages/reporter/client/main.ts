@@ -10,7 +10,7 @@ import "./styles/main.css";
 import DirectoryPage from "./pages/directory.vue";
 import FilePage from "./pages/file.vue";
 
-import cov from "../cov.json";
+import cov from "./cov.json";
 const report = cov as Report[];
 console.log(report);
 
@@ -24,6 +24,9 @@ app.use(
       return {
         path,
         component,
+        props: {
+          report,
+        },
       };
     }),
   }),

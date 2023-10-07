@@ -3,7 +3,7 @@
     placeholder="Loading..."
     :model-value="code"
     :disabled="true"
-    :style="{ height: '400px' }"
+    :style="{ height: '100%' }"
     :autofocus="true"
     :indent-with-tab="true"
     :tab-size="2"
@@ -18,7 +18,7 @@ import { Codemirror } from 'vue-codemirror'
 import { StateField, StateEffect } from '@codemirror/state'
 import { EditorView, ViewUpdate, Decoration, DecorationSet, gutter, GutterMarker } from '@codemirror/view'
 import { javascript } from '@codemirror/lang-javascript'
-import { cssTheme } from './cssTheme'
+import { cssTheme } from '../utils/cssTheme'
 
 import type { CoverageDetail } from '../../shared/report-types'
 
@@ -44,9 +44,9 @@ const uncoveredStatementMark = Decoration.mark({ class: "cm-uncovered-statement"
 const uncoveredBranchMark = Decoration.mark({ class: "cm-uncovered-branch" })
 const uncoveredFunctionMark = Decoration.mark({ class: "cm-uncovered-function" })
 const uncoveredTheme = EditorView.baseTheme({
-  ".cm-uncovered-statement, .cm-uncovered-statement .cm-uncovered-branch": { background: 'var(--cm-uncovered-statement)' },
+  ".cm-uncovered-function": {},
   ".cm-uncovered-branch": { background: 'var(--cm-uncovered-branch)' },
-  ".cm-uncovered-function": { background: 'var(--cm-uncovered-function)' },
+  ".cm-uncovered-statement, .cm-uncovered-statement .cm-uncovered-branch": { background: 'var(--cm-uncovered-statement)' },
   ".cm-gutterElement > .not-covered": {
     background: 'var(--cm-uncovered)',
     padding: '0 2px',
@@ -155,3 +155,4 @@ const handleReady = (payload: Pick<ViewUpdate, 'view' | 'state'>) => {
   console.log(view.value)
 };
 </script>
+../utils/cssTheme
