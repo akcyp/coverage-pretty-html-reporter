@@ -1,6 +1,5 @@
 import { install as VueMonacoEditorPlugin } from "@guolao/vue-monaco-editor";
 import "@vscode/codicons/dist/codicon.css";
-import "primeicons/primeicons.css";
 import PrimeVue from "primevue/config";
 import "primevue/resources/primevue.min.css";
 import Tree from "primevue/tree";
