@@ -85,12 +85,10 @@ Example integration in the parent page:
   window.addEventListener("app-theme-changed", (event) => {
     setCoverageTheme(event.detail.theme); // "light" | "dark"
   });
-<\/script>
+</script>
 ```
 
 Inside the iframe, the selected theme is persisted in localStorage under the coverage-theme key and a coverage-theme-changed CustomEvent is dispatched on window so internal components can react to theme changes.
-
-```
 
 ## Contributing
 
