@@ -1,7 +1,7 @@
 html,
 body {
   height: 100%;
-  font-family: 'Readex Pro', sans-serif;
+  font-family: Segoe WPC, Segoe UI, sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -14,20 +14,17 @@ body {
   overflow: auto;
 }
 
-.layout footer {
-  margin-top: 16px;
-  flex: 0 1 16px;
-}
-
 :root {
   --color-text-light: #000;
   --color-text-dark: #ddd;
   --color-text: var(--color-text-light);
   --background-color: #e4e4e4;
 
-  --stat-low: #ff2d4c;
-  --stat-medium: #6a6a48;
-  --stat-high: #61be61;
+  /* Coverage stat colors (light theme) */
+  /* Low: error red, Medium: amber, High: calm green */
+  --stat-low: #c72e2e;
+  --stat-medium: #b38f00;
+  --stat-high: #1b8a5a;
 }
 
 
@@ -38,70 +35,26 @@ html.dark {
   background-color: var(--background-color);
   color-scheme: dark;
 
-  --stat-low: #de0000;
-  --stat-medium: #d2d200;
-  --stat-high: #00c400;
+  /* Coverage stat colors (dark theme) aligned with VS Code palette */
+  --stat-low: #f14c4c;
+  --stat-medium: #cca700;
+  --stat-high: #89d185;
 }
 
 /* Code editor */
 
 :root {
-  --cm-uncovered-statement: #ff6c6c;
-  --cm-uncovered-branch: #f1ff88;
-  --cm-uncovered: #ff6c6c;
-  --cm-covered: #b8ffc3;
-
-  --cm-foreground: #393a3480;
-  --cm-background: transparent;
-  --cm-json-property: #698c96;
-  --cm-line-number-gutter: #f8f8f8;
-
-  --cm-comment: #a0ada0;
-  --cm-string: #b56959;
-  --cm-literal: #2f8a89;
-  --cm-number: #296aa3;
-  --cm-keyword: #1c6b48;
-  --cm-function: #6c7834;
-  --cm-boolean: #1c6b48;
-  --cm-constant: #a65e2b;
-  --cm-deleted: #a14f55;
-  --cm-class: #2993a3;
-  --cm-builtin: #ab5959;
-  --cm-property: #b58451;
-  --cm-namespace: #b05a78;
-  --cm-punctuation: #8e8f8b;
-  --cm-decorator: #bd8f8f;
-  --cm-regex: #ab5e3f;
+  /* Code editor coverage overlays (light theme) used by Monaco decorations */
+  --cm-uncovered-statement: rgba(241, 76, 76, 0.25);
+  --cm-uncovered-branch: rgba(204, 167, 0, 0.22);
+  --cm-uncovered: #f14c4c;
+  --cm-covered: #1b8a5a;
 }
 
 html.dark {
-  --cm-scheme: dark;
-  --cm-uncovered-statement: #570000;
-  --cm-uncovered-branch: #485200;
-  --cm-uncovered: #570000;
-  --cm-covered: #195700;
-
-  --cm-foreground: #d4cfbf80;
-  --cm-background: transparent;
-  --cm-line-number: #888888;
-  --cm-line-number-gutter: #161616;
-  --cm-line-highlight-background: #444444;
-  --cm-selection-background: #44444450;
-
-  --cm-comment: #758575;
-  --cm-string: #d48372;
-  --cm-literal: #429988;
-  --cm-keyword: #4d9375;
-  --cm-boolean: #1c6b48;
-  --cm-number: #6394bf;
-  --cm-variable: #c2b36e;
-  --cm-function: #a1b567;
-  --cm-deleted: #a14f55;
-  --cm-class: #54b1bf;
-  --cm-builtin: #e0a569;
-  --cm-property: #dd8e6e;
-  --cm-namespace: #db889a;
-  --cm-punctuation: #858585;
-  --cm-decorator: #bd8f8f;
-  --cm-regex: #ab5e3f;
+  /* Code editor coverage overlays (dark theme) used by Monaco decorations */
+  --cm-uncovered-statement: rgba(241, 76, 76, 0.33);
+  --cm-uncovered-branch: rgba(204, 167, 0, 0.30);
+  --cm-uncovered: #f14c4c;
+  --cm-covered: #89d185;
 }
