@@ -2,7 +2,7 @@
   <vue-monaco-editor
     :value="code"
     language="javascript"
-    theme="vs-dark"
+    :theme="monacoTheme"
     :options="editorOptions"
     width="100%"
     height="100%"
@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vue";
 
-import type { CoverageDetail, BlockRange } from "../../shared/report-types";
+import type { BlockRange, CoverageDetail } from "../../shared/report-types";
 
 const props = defineProps<{
   code: string;
@@ -25,6 +25,8 @@ const props = defineProps<{
 const editorInstance = shallowRef<any | null>(null);
 const monacoInstance = shallowRef<any | null>(null);
 const coverageDecorationIds = shallowRef<string[]>([]);
+const monacoTheme = ref("vs-dark");
+let themeListener: ((event: Event) => void) | null = null;
 
 const editorOptions = {
   readOnly: true,
@@ -45,12 +47,7 @@ const editorOptions = {
 const toMonacoRange = (range: BlockRange) => {
   if (!monacoInstance.value) return null;
   const monaco = monacoInstance.value;
-  return new monaco.Range(
-    range.start.line,
-    range.start.column + 1,
-    range.end.line,
-    range.end.column + 1,
-  );
+  return new monaco.Range(range.start.line, range.start.column + 1, range.end.line, range.end.column + 1);
 };
 
 const applyCoverage = (coverage: CoverageDetail) => {
@@ -110,16 +107,12 @@ const applyCoverage = (coverage: CoverageDetail) => {
       range,
       options: {
         isWholeLine: false,
-        linesDecorationsClassName:
-          hits > 0 ? "cov-gutter-covered" : "cov-gutter-uncovered",
+        linesDecorationsClassName: hits > 0 ? "cov-gutter-covered" : "cov-gutter-uncovered",
       },
     });
   }
 
-  coverageDecorationIds.value = editorInstance.value.deltaDecorations(
-    coverageDecorationIds.value,
-    decorations,
-  );
+  coverageDecorationIds.value = editorInstance.value.deltaDecorations(coverageDecorationIds.value, decorations);
 };
 
 watch(
@@ -151,6 +144,27 @@ const handleMount = (editor: any, monaco: any) => {
 
   applyCoverage(props.coverage);
 };
+
+onMounted(() => {
+  // Set initial Monaco theme based on current document theme
+  const isDark = document.documentElement.classList.contains("dark");
+  monacoTheme.value = isDark ? "vs-dark" : "vs";
+
+  themeListener = (event: Event) => {
+    const detail = (event as CustomEvent).detail;
+    if (detail === "light" || detail === "dark") {
+      monacoTheme.value = detail === "dark" ? "vs-dark" : "vs";
+    }
+  };
+  window.addEventListener("coverage-theme-changed", themeListener);
+});
+
+onBeforeUnmount(() => {
+  if (themeListener) {
+    window.removeEventListener("coverage-theme-changed", themeListener);
+    themeListener = null;
+  }
+});
 </script>
 
 <style>

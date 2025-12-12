@@ -47,6 +47,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import iconMap from "../utils/fileIcons.json";
+
 interface OpenFileTab {
   id: string;
   label: string;
@@ -61,9 +62,7 @@ const props = defineProps<{
 
 const breadcrumbs = computed(() => {
   const raw = props.path || "";
-  return raw
-    .split(/[\\/]/g)
-    .filter(Boolean);
+  return raw.split(/[\\/]/g).filter(Boolean);
 });
 
 const emit = defineEmits<{
@@ -83,11 +82,12 @@ const extFromFile = (file: OpenFileTab) => {
 const iconInfoFor = (file: OpenFileTab) => {
   const ext = extFromFile(file);
   const key = ext || "dir";
-  const fromMap = icons[key] ?? icons.default ?? {
-    text: "",
-    bgColor: "#3c3c3c",
-    fgColor: "#ffffff",
-  };
+  const fromMap = icons[key] ??
+    icons.default ?? {
+      text: "",
+      bgColor: "#3c3c3c",
+      fgColor: "#ffffff",
+    };
   const text = fromMap.text || (ext ? ext.toUpperCase() : "");
   return {
     text,
@@ -97,7 +97,6 @@ const iconInfoFor = (file: OpenFileTab) => {
     } as const,
   };
 };
-
 
 const onSelect = (id: string) => {
   emit("select", id);
@@ -117,8 +116,8 @@ const onClose = (id: string) => {
 .open-files-tabs {
   display: flex;
   align-items: stretch;
-  background-color: #222222; /* matches VS Code tab bar */
-  border-bottom: 1px solid #222222;
+  background-color: var(--tabs-bg);
+  border-bottom: 1px solid var(--tabs-border);
   user-select: none;
   height: 35px; /* --editor-group-tab-height */
 }
@@ -129,9 +128,9 @@ const onClose = (id: string) => {
   max-width: 220px;
   padding: 0 12px;
   font-size: 13px;
-  color: #cccccc;
-  background-color: #2d2d2d;
-  border-right: 1px solid #222222;
+  color: var(--tabs-inactive-fg);
+  background-color: var(--tabs-inactive-bg);
+  border-right: 1px solid var(--tabs-border);
   cursor: pointer;
   white-space: nowrap;
   position: relative;
@@ -149,21 +148,18 @@ const onClose = (id: string) => {
 }
 
 .open-files-tab--active {
-  background-color: #1e1e1e;
-  color: #fce566; /* VS Code active tab foreground */
+  background-color: var(--tabs-active-bg);
+  color: var(--tabs-active-fg);
 }
 
 .open-files-tab--active::after {
   /* VS Code yellow active tab underline */
-  background-color: #fce566;
+  background-color: var(--tabs-active-underline);
 }
 
 .open-files-tab__title {
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.open-files-tab__close {
   margin-left: 8px;
   border: none;
   padding: 0 3px;
@@ -177,7 +173,7 @@ const onClose = (id: string) => {
 }
 
 .open-files-tab__close:hover {
-  background-color: #3e3e3e;
+  background-color: var(--tabs-close-hover-bg);
 }
 
 .open-files-tab__icon {
@@ -199,9 +195,9 @@ const onClose = (id: string) => {
   padding: 0 12px;
   line-height: 22px;
   font-size: 13px;
-  background-color: #222222;
-  color: #8b888f;
-  border-bottom: 1px solid #222222;
+  background-color: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+  border-bottom: 1px solid var(--breadcrumbs-border);
   overflow: hidden;
 }
 

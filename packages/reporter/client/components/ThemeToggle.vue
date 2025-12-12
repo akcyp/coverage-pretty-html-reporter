@@ -23,13 +23,18 @@ const applyTheme = (next: Theme, persist = true) => {
       // ignore
     }
   }
+  try {
+    window.dispatchEvent(new CustomEvent("coverage-theme-changed", { detail: next }));
+  } catch {
+    // ignore
+  }
 };
 
 const detectPreferredTheme = (): Theme => {
   try {
     const stored = window.localStorage.getItem("coverage-theme");
     if (stored === "light" || stored === "dark") return stored;
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (window.matchMedia?.("(prefers-color-scheme: dark)")?.matches) {
       return "dark";
     }
   } catch {
@@ -56,24 +61,9 @@ const handleSystemThemeChange = (event: MediaQueryListEvent) => {
 
 const handleThemeMessage = (event: MessageEvent) => {
   const data = event.data;
-  if (typeof data === "string") {
-    if (data === "coverage-theme:dark") {
-      applyTheme("dark");
-      return;
-    }
-    if (data === "coverage-theme:light") {
-      applyTheme("light");
-      return;
-    }
-  }
-  if (data && typeof data === "object") {
-    const maybeType = (data as any).type;
-    const maybeTheme = (data as any).theme;
-    if (
-      maybeType === "coverage-theme" &&
-      (maybeTheme === "light" || maybeTheme === "dark")
-    ) {
-      applyTheme(maybeTheme);
+  if (event.type === "coverage-theme") {
+    if (data === "dark" || data === "light") {
+      applyTheme(data);
     }
   }
 };
@@ -94,8 +84,8 @@ onMounted(() => {
     mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener("change", handleSystemThemeChange);
-    } else if ((mediaQuery as any).addListener) {
-      (mediaQuery as any).addListener(handleSystemThemeChange);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(handleSystemThemeChange);
     }
   }
 
@@ -107,8 +97,8 @@ onBeforeUnmount(() => {
   if (mediaQuery) {
     if (mediaQuery.removeEventListener) {
       mediaQuery.removeEventListener("change", handleSystemThemeChange);
-    } else if ((mediaQuery as any).removeListener) {
-      (mediaQuery as any).removeListener(handleSystemThemeChange);
+    } else if (mediaQuery.removeListener) {
+      mediaQuery.removeListener(handleSystemThemeChange);
     }
     mediaQuery = null;
   }
@@ -142,18 +132,18 @@ onBeforeUnmount(() => {
   width: 26px;
   height: 26px;
   border-radius: 4px;
-  border: 1px solid #3c3c3c;
-  background-color: #252526;
+  border: 1px solid var(--theme-toggle-border);
+  background-color: var(--theme-toggle-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f0f0f0;
+  color: var(--theme-toggle-fg);
   cursor: pointer;
   padding: 0;
 }
 
 .theme-toggle:hover {
-  background-color: #2d2d30;
+  background-color: var(--theme-toggle-hover-bg);
 }
 
 .theme-toggle .codicon {

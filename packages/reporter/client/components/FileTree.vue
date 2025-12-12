@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import type { Report, FileReport, DirectoryReport } from "../../shared/report-types";
+import type { DirectoryReport, FileReport, Report } from "../../shared/report-types";
 
 const props = defineProps<{
   reports: Report[];
@@ -183,8 +183,8 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
 .file-tree {
   height: 100%;
   padding: 8px 4px;
-  background-color: #191919;
-  color: #8b888f;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
   font-size: 13px;
   font-weight: 400;
   user-select: none;
@@ -192,8 +192,8 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
 
 .file-tree-header {
   line-height: 22px;
-  color: #69676c;
-  background-color: #191919;
+  color: var(--sidebar-header-fg);
+  background-color: var(--sidebar-bg);
   height: 22px;
   font-size: 11px;
   font-weight: 700;
@@ -238,13 +238,13 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
 }
 
 .p-treenode-content.p-highlight {
-  color: #fce566;
-  background-color: #bab6c00d;
+  color: var(--sidebar-row-active-fg);
+  background-color: var(--sidebar-row-active-bg);
 }
 
 .p-treenode-content:hover {
-  background-color: #bab6c00d;
-  color: #f7f1ff;
+  background-color: var(--sidebar-row-hover-bg);
+  color: var(--sidebar-row-hover-fg);
   cursor: pointer;
 }
 
@@ -252,7 +252,7 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #c5c5c5;
+  color: var(--sidebar-icon-fg);
   padding: 0 2px;
   margin: 0 2px 0 0;
   font-size: 14px;
@@ -276,7 +276,7 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
   align-items: center;
   justify-content: center;
   width: 18px;
-  color: #c5c5c5;
+  color: var(--sidebar-icon-fg);
 }
 
 .file-tree-node__label {
@@ -294,7 +294,7 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
   justify-content: center;
   margin-left: 4px;
   opacity: 0;
-  color: #c5c5c5;
+  color: var(--sidebar-icon-fg);
   cursor: pointer;
 }
 
@@ -304,6 +304,6 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
 
 .file-tree-node__action:hover {
   opacity: 1;
-  color: #fce566;
+  color: var(--sidebar-row-active-fg);
 }
 </style>

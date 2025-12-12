@@ -1,27 +1,20 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { onBeforeUnmount, onMounted } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import type { DirectoryReport, FileReport, Report } from "../shared/report-types";
 import FileTree from "./components/FileTree.vue";
-import DirectoryPage from "./pages/directory.vue";
-import FilePage from "./pages/file.vue";
 import Footer from "./components/Footer.vue";
 import ThemeToggle from "./components/ThemeToggle.vue";
 import devCov from "./demoReport.json";
-import type { Report, FileReport, DirectoryReport } from "../shared/report-types";
+import DirectoryPage from "./pages/directory.vue";
+import FilePage from "./pages/file.vue";
 
-// biome-ignore lint/style/noNonNullAssertion:
-const reports = (import.meta.env.MODE === "development"
-  ? (devCov as Report[])
-  : (window.reports as Report[]));
+// biome-ignore lint/style/noNonNullAssertion: used to load reports injected in dev and prod
+const reports = import.meta.env.MODE === "development" ? (devCov as Report[]) : (window.reports as Report[]);
 
 const fileReports = computed(() => reports.filter((r) => r.type === "file") as FileReport[]);
-const directoryReports = computed(
-  () => reports.filter((r) => r.type === "directory") as DirectoryReport[],
-);
+const directoryReports = computed(() => reports.filter((r) => r.type === "directory") as DirectoryReport[]);
 
-const rootDirectory = computed(
-  () => directoryReports.value.find((d) => d.root) ?? directoryReports.value[0] ?? null,
-);
+const rootDirectory = computed(() => directoryReports.value.find((d) => d.root) ?? directoryReports.value[0] ?? null);
 
 type ViewMode = "directory" | "file";
 
@@ -192,8 +185,8 @@ const openFileByEntity = (entity: string) => {
 
 .app-sidebar {
   width: 260px;
-  background-color: #252526;
-  border-right: 1px solid #333333;
+  background-color: var(--app-sidebar-bg);
+  border-right: 1px solid var(--app-sidebar-border);
 }
 
 .app-main {
@@ -201,6 +194,7 @@ const openFileByEntity = (entity: string) => {
   min-width: 0;
   display: flex;
   flex-direction: column;
+  background-color: var(--app-main-bg);
 }
 
 .app-main-content {

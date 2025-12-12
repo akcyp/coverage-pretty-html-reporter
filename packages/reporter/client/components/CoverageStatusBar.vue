@@ -33,7 +33,7 @@ const props = defineProps<{
   height: 24px;
   line-height: 24px;
   font-size: 12px;
-  background-color: #1e1e1e;
-  border-bottom: 1px solid #1e1e1e;
+  background-color: var(--panel-bg);
+  border-bottom: 1px solid var(--panel-border);
 }
 </style>

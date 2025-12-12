@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import type { DirectoryReport } from "../../shared/report-types";
+import { statToString } from "../utils/statToString";
 import ProgressBar from "./ProgressBar.vue";
 import Stats from "./Stats.vue";
-import { statToString } from "../utils/statToString";
-import type { DirectoryReport } from "../../shared/report-types";
 
 const props = defineProps<{
   report: DirectoryReport;
   isRoot?: boolean;
 }>();
-const emit = defineEmits<{
-  (e: "open-file", entity: string): void;
-}>();
+const emit = defineEmits<(e: "open-file", entity: string) => void>();
 
 const overallPct = computed(() => props.report.stats.statements.pct);
 const overallClass = computed(() => props.report.stats.statements.class);
@@ -79,13 +77,13 @@ const handleRowClick = (entity: string) => {
   width: 100%;
   box-sizing: border-box;
   padding: 16px;
-  background-color: #1e1e1e;
+  background-color: var(--panel-bg);
 }
 
 .dir-view--root {
   justify-content: center;
   align-items: center;
-  background-color: #111111;
+  background-color: var(--panel-bg-muted);
 }
 
 .dir-view-main {
@@ -109,8 +107,8 @@ const handleRowClick = (entity: string) => {
   width: 80px;
   height: 80px;
   border-radius: 8px;
-  background: #0e639c;
-  color: #ffffff;
+  background: var(--panel-hero-icon-bg);
+  color: var(--panel-hero-icon-fg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,17 +124,17 @@ const handleRowClick = (entity: string) => {
 
 .dir-view-hero-title {
   font-size: 18px;
-  color: #e0e0e0;
+  color: var(--panel-header-fg);
 }
 
 .dir-view-hero-subtitle {
   font-size: 12px;
-  color: #a0a0a0;
+  color: var(--panel-subtle-fg);
 }
 
 .dir-view-hero-value {
   font-size: 28px;
-  color: #fce566;
+  color: var(--panel-hero-accent);
   font-weight: 500;
 }
 
@@ -147,7 +145,7 @@ const handleRowClick = (entity: string) => {
 .dir-view-files {
   flex: 1;
   min-height: 0;
-  border-top: 1px solid #333333;
+  border-top: 1px solid var(--panel-border);
   padding-top: 8px;
   overflow: auto;
 }
@@ -156,7 +154,7 @@ const handleRowClick = (entity: string) => {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #858585;
+  color: var(--panel-subtle-fg);
   margin-bottom: 6px;
 }
 
@@ -169,14 +167,14 @@ const handleRowClick = (entity: string) => {
 }
 
 .dir-view-file-row:hover {
-  background-color: #2a2d2e;
+  background-color: var(--sidebar-row-hover-bg);
 }
 
 .dir-view-file-name {
   flex: 1;
   min-width: 0;
   font-size: 13px;
-  color: #d4d4d4;
+  color: var(--panel-header-fg);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

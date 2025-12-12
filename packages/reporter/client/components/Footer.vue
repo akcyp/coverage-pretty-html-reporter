@@ -28,10 +28,10 @@ const { unix } = defineProps<{
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background-color: #191919;
-  color: #d4d4d4;
+  background-color: var(--statusbar-bg);
+  color: var(--statusbar-fg);
   font-size: 11px;
-  border-top: 1px solid #333333;
+  border-top: 1px solid var(--statusbar-border);
 }
 
 .app-footer__text {
@@ -41,12 +41,12 @@ const { unix } = defineProps<{
 }
 
 .app-footer__link {
-  color: #d4d4d4;
+  color: inherit;
   text-decoration: none;
 }
 
 .app-footer__link:hover {
   text-decoration: underline;
-  color: #ffffff;
+  color: var(--statusbar-fg);
 }
 </style>

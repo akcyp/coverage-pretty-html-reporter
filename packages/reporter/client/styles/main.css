@@ -1,17 +1,11 @@
 html,
 body {
   height: 100%;
-  font-family: Segoe WPC, Segoe UI, sans-serif;
+  font-family:
+    Segoe WPC,
+    Segoe UI,
+    sans-serif;
   scroll-behavior: smooth;
-}
-
-.layout nav, .layout main {
-  flex: 0 1 auto;
-}
-
-.layout section {
-  flex: 1 1 auto;
-  overflow: auto;
 }
 
 :root {
@@ -20,6 +14,55 @@ body {
   --color-text: var(--color-text-light);
   --background-color: #e4e4e4;
 
+  /* Layout + chrome (light theme) */
+  --app-sidebar-bg: #f3f3f3;
+  --app-sidebar-border: #cccccc;
+  --app-main-bg: #ffffff;
+
+  /* Shared header surface (tabs + breadcrumbs) */
+  --surface-header-bg: #f3f3f3;
+  --surface-header-border: #cccccc;
+
+  --tabs-bg: var(--surface-header-bg);
+  --tabs-border: var(--surface-header-border);
+  --tabs-inactive-fg: #3c3c3c;
+  --tabs-inactive-bg: #e1e1e1;
+  --tabs-active-bg: #ffffff;
+  --tabs-active-fg: #1e1e1e;
+  --tabs-active-underline: #007acc;
+  --tabs-close-hover-bg: #dddddd;
+
+  --breadcrumbs-bg: var(--surface-header-bg);
+  --breadcrumbs-fg: #444444;
+  --breadcrumbs-border: var(--surface-header-border);
+
+  --sidebar-bg: #f3f3f3;
+  --sidebar-fg: #444444;
+  --sidebar-header-fg: #6e6e6e;
+  --sidebar-row-hover-bg: #e5e5e5;
+  --sidebar-row-hover-fg: #1e1e1e;
+  --sidebar-row-active-bg: #d0e7ff;
+  --sidebar-row-active-fg: #1e1e1e;
+  --sidebar-icon-fg: #6e6e6e;
+
+  --panel-bg: #ffffff;
+  --panel-bg-muted: #f3f3f3;
+  --panel-border: #cccccc;
+  --panel-header-fg: #444444;
+  --panel-subtle-fg: #777777;
+  --panel-hero-icon-bg: #0e639c;
+  --panel-hero-icon-fg: #ffffff;
+  --panel-hero-accent: #fce566;
+
+  --statusbar-bg: #f3f3f3;
+  --statusbar-border: #e0e0e0;
+  --statusbar-fg: #444444;
+
+  --theme-toggle-bg: #f3f3f3;
+  --theme-toggle-border: #cccccc;
+  --theme-toggle-fg: #333333;
+  --theme-toggle-hover-bg: #e5e5e5;
+
   /* Coverage stat colors (light theme) */
   /* Low: error red, Medium: amber, High: calm green */
   --stat-low: #c72e2e;
@@ -27,13 +70,61 @@ body {
   --stat-high: #1b8a5a;
 }
 
-
 html.dark {
   --color-text: var(--color-text-dark);
   --background-color: #141414;
   color: var(--color-text);
   background-color: var(--background-color);
   color-scheme: dark;
+
+  /* Layout + chrome (dark theme) */
+  --app-sidebar-bg: #252526;
+  --app-sidebar-border: #333333;
+  --app-main-bg: #1e1e1e;
+
+  /* Shared header surface (tabs + breadcrumbs) */
+  --surface-header-bg: #222222;
+  --surface-header-border: #222222;
+
+  --tabs-bg: var(--surface-header-bg);
+  --tabs-border: var(--surface-header-border);
+  --tabs-inactive-fg: #cccccc;
+  --tabs-inactive-bg: #2d2d2d;
+  --tabs-active-bg: #1e1e1e;
+  --tabs-active-fg: #fce566;
+  --tabs-active-underline: #fce566;
+  --tabs-close-hover-bg: #3e3e3e;
+
+  --breadcrumbs-bg: var(--surface-header-bg);
+  --breadcrumbs-fg: #8b888f;
+  --breadcrumbs-border: var(--surface-header-border);
+
+  --sidebar-bg: #191919;
+  --sidebar-fg: #8b888f;
+  --sidebar-header-fg: #69676c;
+  --sidebar-row-hover-bg: #bab6c00d;
+  --sidebar-row-hover-fg: #f7f1ff;
+  --sidebar-row-active-bg: #bab6c00d;
+  --sidebar-row-active-fg: #fce566;
+  --sidebar-icon-fg: #c5c5c5;
+
+  --panel-bg: #1e1e1e;
+  --panel-bg-muted: #111111;
+  --panel-border: #333333;
+  --panel-header-fg: #e0e0e0;
+  --panel-subtle-fg: #a0a0a0;
+  --panel-hero-icon-bg: #0e639c;
+  --panel-hero-icon-fg: #ffffff;
+  --panel-hero-accent: #fce566;
+
+  --statusbar-bg: #191919;
+  --statusbar-border: #333333;
+  --statusbar-fg: #d4d4d4;
+
+  --theme-toggle-bg: #252526;
+  --theme-toggle-border: #3c3c3c;
+  --theme-toggle-fg: #f0f0f0;
+  --theme-toggle-hover-bg: #2d2d30;
 
   /* Coverage stat colors (dark theme) aligned with VS Code palette */
   --stat-low: #f14c4c;
@@ -54,7 +145,7 @@ html.dark {
 html.dark {
   /* Code editor coverage overlays (dark theme) used by Monaco decorations */
   --cm-uncovered-statement: rgba(241, 76, 76, 0.33);
-  --cm-uncovered-branch: rgba(204, 167, 0, 0.30);
+  --cm-uncovered-branch: rgba(204, 167, 0, 0.3);
   --cm-uncovered: #f14c4c;
   --cm-covered: #89d185;
 }
