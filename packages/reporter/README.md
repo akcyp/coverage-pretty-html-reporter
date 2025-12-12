@@ -5,8 +5,8 @@
 
 Home | Stats | Code
 :----:|:---:|:---:
-![Summary](../../images/home-dark.png) | ![Stats](../../images/stats-dark.png)  | ![Coverage](../../images/code-dark.png)
-![Summary](../../images/home-light.png) | ![Stats](../../images/stats-light.png)  | ![Coverage](../../images/code-light.png)
+![Summary](https://raw.githubusercontent.com/akcyp/coverage-pretty-html-reporter/main/images/home-dark.png) | ![Stats](https://raw.githubusercontent.com/akcyp/coverage-pretty-html-reporter/main/images/stats-dark.png)  | ![Coverage](https://raw.githubusercontent.com/akcyp/coverage-pretty-html-reporter/main/images/code-dark.png)
+![Summary](https://raw.githubusercontent.com/akcyp/coverage-pretty-html-reporter/main/images/home-light.png) | ![Stats](https://raw.githubusercontent.com/akcyp/coverage-pretty-html-reporter/main/images/stats-light.png)  | ![Coverage](https://raw.githubusercontent.com/akcyp/coverage-pretty-html-reporter/main/images/code-light.png)
 
 ## Installation
 
