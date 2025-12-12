@@ -1,0 +1,10 @@
+{
+  "default": { "text": "", "bgColor": "#3c3c3c", "fgColor": "#ffffff" },
+  "dir": { "text": "%", "bgColor": "#0e639c", "fgColor": "#ffffff" },
+  "ts": { "text": "TS", "bgColor": "#007acc", "fgColor": "#ffffff" },
+  "tsx": { "text": "TS", "bgColor": "#007acc", "fgColor": "#ffffff" },
+  "js": { "text": "JS", "bgColor": "#f1e05a", "fgColor": "#000000" },
+  "jsx": { "text": "JS", "bgColor": "#f1e05a", "fgColor": "#000000" },
+  "vue": { "text": "V", "bgColor": "#41b883", "fgColor": "#ffffff" },
+  "json": { "text": "JSON", "bgColor": "#cb3837", "fgColor": "#ffffff" }
+}

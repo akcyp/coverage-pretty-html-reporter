@@ -7,26 +7,6 @@
     <title>Coverage report</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400&display=swap" rel="stylesheet">
-    <script>
-      (function () {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
-        if (setting === 'dark' || (prefersDark && setting !== 'light')) {
-          document.documentElement.classList.toggle('dark', true)
-        }
-        window.addEventListener('message', (e) => {
-          if (e.data.theme === 'dark') {
-            document.documentElement.classList.remove('light')
-            document.documentElement.classList.add('dark')
-          }
-          if (e.data.theme === 'light') {
-            document.documentElement.classList.remove('dark')
-            document.documentElement.classList.add('light')
-          }
-        });
-      })()
-    </script>
     <!-- !LOAD_METADATA! -->
   </head>
   <body>

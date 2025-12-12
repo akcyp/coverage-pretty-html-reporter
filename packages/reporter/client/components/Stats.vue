@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { SummaryStats } from '../../shared/report-types';
-import { statToString } from '../utils/statToString'
+import type { SummaryStats } from "../../shared/report-types";
+import { statToString } from "../utils/statToString";
 
 const props = defineProps<{
-  stats: SummaryStats
-}>()
+  stats: SummaryStats;
+}>();
 </script>
 
 <style>
@@ -17,10 +17,18 @@ const props = defineProps<{
 .stat-high {
   color: var(--stat-high);
 }
+  
+.stats-root {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
 </style>
 
 <template>
-  <main p-2 flex flex-col flex-justify-between text-sm>
+  <main class="stats-root">
     <div :class="[`stat-${props.stats.statements.class}`]">
       Statements: {{ statToString(props.stats.statements) }}
     </div>
