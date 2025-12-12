@@ -5,6 +5,7 @@ import FileTree from "./components/FileTree.vue";
 import DirectoryPage from "./pages/directory.vue";
 import FilePage from "./pages/file.vue";
 import Footer from "./components/Footer.vue";
+import ThemeToggle from "./components/ThemeToggle.vue";
 import devCov from "./demoReport.json";
 import type { Report, FileReport, DirectoryReport } from "../shared/report-types";
 
@@ -173,6 +174,7 @@ const openFileByEntity = (entity: string) => {
     </div>
     <Footer v-if="currentUnix !== null" :unix="currentUnix" />
   </div>
+    <ThemeToggle />
 </template>
 
 <style scoped>

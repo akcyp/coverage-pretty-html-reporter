@@ -1,0 +1,162 @@
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from "vue";
+
+type Theme = "light" | "dark";
+
+const theme = ref<Theme>("dark");
+const isFramed = ref(false);
+let mediaQuery: MediaQueryList | null = null;
+let messageListener: ((event: MessageEvent) => void) | null = null;
+
+const applyTheme = (next: Theme, persist = true) => {
+  theme.value = next;
+  const root = document.documentElement;
+  if (next === "dark") {
+    root.classList.add("dark");
+  } else {
+    root.classList.remove("dark");
+  }
+  if (persist) {
+    try {
+      window.localStorage.setItem("coverage-theme", next);
+    } catch {
+      // ignore
+    }
+  }
+};
+
+const detectPreferredTheme = (): Theme => {
+  try {
+    const stored = window.localStorage.getItem("coverage-theme");
+    if (stored === "light" || stored === "dark") return stored;
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+  } catch {
+    // ignore
+  }
+  return "light";
+};
+
+const toggleTheme = () => {
+  const next: Theme = theme.value === "dark" ? "light" : "dark";
+  applyTheme(next);
+};
+
+const handleSystemThemeChange = (event: MediaQueryListEvent) => {
+  // If user explicitly chose a theme, don't override with system changes
+  try {
+    const stored = window.localStorage.getItem("coverage-theme");
+    if (stored === "light" || stored === "dark") return;
+  } catch {
+    // ignore
+  }
+  applyTheme(event.matches ? "dark" : "light", false);
+};
+
+const handleThemeMessage = (event: MessageEvent) => {
+  const data = event.data;
+  if (typeof data === "string") {
+    if (data === "coverage-theme:dark") {
+      applyTheme("dark");
+      return;
+    }
+    if (data === "coverage-theme:light") {
+      applyTheme("light");
+      return;
+    }
+  }
+  if (data && typeof data === "object") {
+    const maybeType = (data as any).type;
+    const maybeTheme = (data as any).theme;
+    if (
+      maybeType === "coverage-theme" &&
+      (maybeTheme === "light" || maybeTheme === "dark")
+    ) {
+      applyTheme(maybeTheme);
+    }
+  }
+};
+
+onMounted(() => {
+  // Detect if running inside an iframe
+  try {
+    isFramed.value = window.self !== window.top;
+  } catch {
+    isFramed.value = true;
+  }
+
+  // Apply initial theme from storage or system preference
+  const initialTheme = detectPreferredTheme();
+  applyTheme(initialTheme, false);
+
+  if (window.matchMedia) {
+    mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleSystemThemeChange);
+    } else if ((mediaQuery as any).addListener) {
+      (mediaQuery as any).addListener(handleSystemThemeChange);
+    }
+  }
+
+  messageListener = (event: MessageEvent) => handleThemeMessage(event);
+  window.addEventListener("message", messageListener);
+});
+
+onBeforeUnmount(() => {
+  if (mediaQuery) {
+    if (mediaQuery.removeEventListener) {
+      mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    } else if ((mediaQuery as any).removeListener) {
+      (mediaQuery as any).removeListener(handleSystemThemeChange);
+    }
+    mediaQuery = null;
+  }
+  if (messageListener) {
+    window.removeEventListener("message", messageListener);
+    messageListener = null;
+  }
+});
+</script>
+
+<template>
+  <button
+    v-if="!isFramed"
+    class="theme-toggle"
+    type="button"
+    :title="theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+    @click="toggleTheme"
+  >
+    <i
+      class="codicon codicon-color-mode"
+    />
+  </button>
+</template>
+
+<style scoped>
+.theme-toggle {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 50;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  border: 1px solid #3c3c3c;
+  background-color: #252526;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f0f0f0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  background-color: #2d2d30;
+}
+
+.theme-toggle .codicon {
+  font-size: 14px;
+}
+</style>
