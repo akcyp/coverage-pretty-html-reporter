@@ -61,10 +61,12 @@ const handleSystemThemeChange = (event: MediaQueryListEvent) => {
 
 const handleThemeMessage = (event: MessageEvent) => {
   const data = event.data;
-  if (event.type === "coverage-theme") {
-    if (data === "dark" || data === "light") {
-      applyTheme(data);
-    }
+  if (!data || typeof data !== "object") return;
+
+  const { type, theme } = data as { type?: string; theme?: Theme };
+
+  if (type === "coverage-theme" && (theme === "dark" || theme === "light")) {
+    applyTheme(theme);
   }
 };
 

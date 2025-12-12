@@ -163,7 +163,7 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
       v-model:expandedKeys="expandedKeys"
     >
       <template #default="{ node }">
-        <span class="file-tree-node" @click="handleRowClick(node)">
+        <span class="file-tree-node" @click="handleRowClick(node as TreeNode)">
           <span class="file-tree-node__icon">
             <i
               v-if="node.children && node.children.length"
@@ -180,7 +180,7 @@ const handleStatsClick = (node: TreeNode, event: MouseEvent) => {
             v-if="node.children && node.children.length"
             class="file-tree-node__action"
             title="See stats"
-            @click="handleStatsClick(node, $event)"
+            @click="handleStatsClick(node as TreeNode, $event)"
           >
             <span class="codicon codicon-graph"></span>
           </span>
