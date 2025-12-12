@@ -25,13 +25,24 @@ interface TreeNode {
   leaf?: boolean;
 }
 
-const buildTree = (reports: Report[]): TreeNode[] => {
-  const rootMap = new Map<string, any>();
+interface TreeNodeMapEntry {
+  key: string;
+  label: string;
+  childrenMap: Map<string, TreeNodeMapEntry>;
+  data?: TreeNodeData;
+}
 
-  const ensureNode = (segments: string[]): any => {
+const buildTree = (reports: Report[]): TreeNode[] => {
+  const rootMap = new Map<string, TreeNodeMapEntry>();
+
+  const ensureNode = (segments: string[]): TreeNodeMapEntry => {
     let map = rootMap;
     let currentPath = "";
-    let node: any;
+    let node: TreeNodeMapEntry = {
+      key: "",
+      label: "",
+      childrenMap: new Map(),
+    };
 
     segments.forEach((segment) => {
       currentPath = currentPath ? `${currentPath}/${segment}` : segment;
@@ -40,7 +51,7 @@ const buildTree = (reports: Report[]): TreeNode[] => {
         entry = {
           key: currentPath,
           label: segment,
-          childrenMap: new Map<string, any>(),
+          childrenMap: new Map<string, TreeNodeMapEntry>(),
         };
         map.set(segment, entry);
       }
@@ -62,7 +73,7 @@ const buildTree = (reports: Report[]): TreeNode[] => {
     } as TreeNodeData;
   }
 
-  const mapToNodes = (map: Map<string, any>): TreeNode[] => {
+  const mapToNodes = (map: Map<string, TreeNodeMapEntry>): TreeNode[] => {
     const nodes: TreeNode[] = [];
     for (const [, value] of map) {
       const children = mapToNodes(value.childrenMap);
@@ -102,7 +113,7 @@ watch(
     const keys: Record<string, boolean> = {};
     const collect = (items: TreeNode[]) => {
       for (const item of items) {
-        if (item.children && item.children.length) {
+        if (item.children?.length) {
           keys[item.key] = true;
           collect(item.children);
         }

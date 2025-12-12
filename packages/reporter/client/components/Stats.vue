@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { SummaryStats } from '../../shared/report-types';
-import { statToString } from '../utils/statToString'
+import type { SummaryStats } from "../../shared/report-types";
+import { statToString } from "../utils/statToString";
 
 const props = defineProps<{
-  stats: SummaryStats
-}>()
+  stats: SummaryStats;
+}>();
 </script>
 
 <style>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 const props = defineProps<{
   value: number;
   color: string;
-}>()
+}>();
 
-const width = computed(() => `${props.value}%`)
+const width = computed(() => `${props.value}%`);
 </script>
 
 <template>

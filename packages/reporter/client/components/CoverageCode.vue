@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
+import type * as Monaco from "monaco-editor";
 import { onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vue";
-
 import type { BlockRange, CoverageDetail } from "../../shared/report-types";
 
 const props = defineProps<{
@@ -22,8 +22,8 @@ const props = defineProps<{
   coverage: CoverageDetail;
 }>();
 
-const editorInstance = shallowRef<any | null>(null);
-const monacoInstance = shallowRef<any | null>(null);
+const editorInstance = shallowRef<Monaco.editor.IStandaloneCodeEditor | null>(null);
+const monacoInstance = shallowRef<typeof Monaco | null>(null);
 const coverageDecorationIds = shallowRef<string[]>([]);
 const monacoTheme = ref("vs-dark");
 let themeListener: ((event: Event) => void) | null = null;
@@ -54,7 +54,7 @@ const applyCoverage = (coverage: CoverageDetail) => {
   if (!editorInstance.value || !monacoInstance.value) return;
   const monaco = monacoInstance.value;
 
-  const decorations: any[] = [];
+  const decorations: Monaco.editor.IModelDeltaDecoration[] = [];
 
   // Uncovered statements
   for (const [id, count] of Object.entries(coverage.s)) {
@@ -123,7 +123,7 @@ watch(
   { deep: true },
 );
 
-const handleMount = (editor: any, monaco: any) => {
+const handleMount = (editor: Monaco.editor.IStandaloneCodeEditor, monaco: typeof Monaco) => {
   editorInstance.value = editor;
   monacoInstance.value = monaco;
 

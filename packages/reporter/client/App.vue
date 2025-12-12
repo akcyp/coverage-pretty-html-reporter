@@ -8,7 +8,6 @@ import devCov from "./demoReport.json";
 import DirectoryPage from "./pages/directory.vue";
 import FilePage from "./pages/file.vue";
 
-// biome-ignore lint/style/noNonNullAssertion: used to load reports injected in dev and prod
 const reports = import.meta.env.MODE === "development" ? (devCov as Report[]) : (window.reports as Report[]);
 
 const fileReports = computed(() => reports.filter((r) => r.type === "file") as FileReport[]);

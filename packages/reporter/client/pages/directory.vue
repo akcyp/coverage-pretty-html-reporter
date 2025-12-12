@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import OpenFilesTabs from "../components/OpenFilesTabs.vue";
-import DirectoryStatsView from "../components/DirectoryStatsView.vue";
-
-import type { DirectoryReport } from "../../shared/report-types";
 import { computed } from "vue";
+import type { DirectoryReport } from "../../shared/report-types";
+import DirectoryStatsView from "../components/DirectoryStatsView.vue";
+import OpenFilesTabs from "../components/OpenFilesTabs.vue";
 
 const props = defineProps<{
   report: DirectoryReport;

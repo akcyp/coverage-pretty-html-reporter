@@ -1,11 +1,11 @@
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
-import { CoverageSummary } from "istanbul-lib-coverage";
+import type { CoverageSummary } from "istanbul-lib-coverage";
+import type { Context, FileContentWriter, ReportBaseOptions, ReportNode } from "istanbul-lib-report";
 import { ReportBase } from "istanbul-lib-report";
 import { compress } from "lz-string";
-
-import type { Context, FileContentWriter, ReportBaseOptions, ReportNode } from "istanbul-lib-report";
 import type { DirectoryReport, FileReport, Report, SummaryStats } from "../shared/report-types";
+
 export type * from "../shared/report-types";
 
 function* walkDir(dir: string) {
@@ -53,7 +53,7 @@ export class NextHTMLReport extends ReportBase {
     super(options);
   }
 
-  override onStart(root: ReportNode, context: Context) {
+  override onStart(_root: ReportNode, context: Context) {
     this.reset();
     const dist = join(__dirname, "../dist/client");
     const writer = this.getWriter(context);
@@ -106,7 +106,7 @@ export class NextHTMLReport extends ReportBase {
     this.reports.push(report);
   }
 
-  override onEnd(root: ReportNode, context: Context) {
+  override onEnd(_root: ReportNode, context: Context) {
     // write
     const writer = this.getWriter(context);
     const statsStream = writer.writeFile("loadcov.js") as FileContentWriter;
